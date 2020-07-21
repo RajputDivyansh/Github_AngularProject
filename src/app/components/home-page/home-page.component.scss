@@ -1,0 +1,37 @@
+.heading {
+    background-color: grey;
+}
+
+.inputName {
+    width: 370px;
+    height: 35px;
+    // background-color: ;
+    outline: none;
+}
+
+.search {
+    // padding: 0;
+    margin-left: 10px;
+}
+
+.mainDiv {
+    margin-top: 20px;
+}
+
+.innerDiv {
+    height: 100%;
+    margin: 0;
+}
+
+
+.card {
+    display: flex;
+    border: 0;
+}
+
+.innerCard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}

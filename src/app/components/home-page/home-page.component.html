@@ -1,0 +1,35 @@
+<div>
+    <div class="row heading">
+        <div class="col-sm-3"><h5 style="margin-top: 10px; margin-left: 10px;">Github User Search</h5></div>
+        <div class="form-group col-sm-6 innerDiv">
+            <form action="" (ngSubmit)="onSubmit()">
+                <input class="inputName" type="text" name="title" [(ngModel)]="title" placeholder="Search Name">
+                <input  type="submit" value="submit" class="btn btn-dark search">
+            </form>
+        </div>
+        <div class="col-sm-3" style="padding-right: 0;">
+            <button class="btn btn-warning" (click)="sort()">Sort</button>
+        </div>
+    </div>
+    <div class="row mainDiv">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-8 card">
+            <div *ngIf="userArray; else elseBlock" class="innerCard">
+                <div *ngFor="let user of userArray">
+                    <div style="width: 18rem;">
+                        <img class="card-img-top" src={{user.avatar_url}} alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text">{{user.login}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+        <ng-template #elseBlock>
+            <p style="margin-left: 127px;">Enter User Name</p>
+        </ng-template>
+    </div>
+</div>
