@@ -1,35 +1,87 @@
 <div>
-    <div class="row heading">
-        <div class="col-sm-3"><h5 style="margin-top: 10px; margin-left: 10px;">Github User Search</h5></div>
-        <div class="form-group col-sm-6 innerDiv">
-            <form action="" (ngSubmit)="onSubmit()">
-                <input class="inputName" type="text" name="title" [(ngModel)]="title" placeholder="Search Name">
-                <input  type="submit" value="submit" class="btn btn-dark search">
-            </form>
+    <div
+        class="search-results"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        [immediateCheck]="false"
+        (scrolled)="onScroll()"
+        >
+        <div class="row heading">
+            <div class="col-sm-3"><h5 style="margin-top: 10px; margin-left: 10px;">Github User Search</h5></div>
+            <div class="form-group col-sm-6 innerDiv">
+                <form action="" (ngSubmit)="onSubmit()">
+                    <input class="inputName" type="text" name="title" [(ngModel)]="title" placeholder="Search Name">
+                    <input  type="submit" value="Search" class="btn btn-dark search">
+                </form>
+            </div>
+            <div class="col-sm-3" style="padding-right: 0;">
+                <button class="btn btn-warning" (click)="sort()">Sort</button>
+            </div>
         </div>
-        <div class="col-sm-3" style="padding-right: 0;">
-            <button class="btn btn-warning" (click)="sort()">Sort</button>
-        </div>
-    </div>
-    <div class="row mainDiv">
-        <div class="col-sm-2">
-        </div>
-        <div class="col-sm-8 card">
-            <div *ngIf="userArray; else elseBlock" class="innerCard">
-                <div *ngFor="let user of userArray">
-                    <div style="width: 18rem;">
-                        <img class="card-img-top" src={{user.avatar_url}} alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text">{{user.login}}</p>
+        <div class="row mainDiv">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-8 card">
+                <div *ngIf="userArray; else elseBlock" class="innerCard">
+                    <div *ngFor="let user of userArray">
+                        <div style="width: 18rem;">
+                            <img class="card-img-top" src={{user.avatar_url}} alt="Card image cap">
+                            <div class="card-body">
+                                <div class="modal-footer">
+                                    <div style="margin: 0;">
+                                        <button type="button" style="outline: none; border: 0;" class="btn btn-default float-left" data-toggle="modal" data-target="#myModal" (click)="getUser(user.login)">{{user.login}}</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-2">
+                </div>
+                <ng-template #elseBlock>
+                    <p style="margin-left: 127px;">Enter User Name</p>
+                </ng-template>
             </div>
         </div>
-        <div class="col-sm-2">
+    </div>
+    <!-- <div class="spinner-border text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div> -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{user?.login}}</h4>
+                        <div *ngIf="user?.site_admin; else flagElseBlock">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" style="margin-top:12px; color:green" class="bi bi-flag-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M3.762 2.558C4.735 1.909 5.348 1.5 6.5 1.5c.653 0 1.139.325 1.495.562l.032.022c.391.26.646.416.973.416.168 0 .356-.042.587-.126a8.89 8.89 0 0 0 .593-.25c.058-.027.117-.053.18-.08.57-.255 1.278-.544 2.14-.544a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5c-.638 0-1.18.21-1.734.457l-.159.07c-.22.1-.453.205-.678.287A2.719 2.719 0 0 1 9 9.5c-.653 0-1.139-.325-1.495-.562l-.032-.022c-.391-.26-.646-.416-.973-.416-.833 0-1.218.246-2.223.916A.5.5 0 0 1 3.5 9V3a.5.5 0 0 1 .223-.416l.04-.026z"/>
+                              </svg>
+                        </div>
+                        <ng-template #flagElseBlock>
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" style="margin-top:12px; color: red" class="bi bi-flag-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M3.762 2.558C4.735 1.909 5.348 1.5 6.5 1.5c.653 0 1.139.325 1.495.562l.032.022c.391.26.646.416.973.416.168 0 .356-.042.587-.126a8.89 8.89 0 0 0 .593-.25c.058-.027.117-.053.18-.08.57-.255 1.278-.544 2.14-.544a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5c-.638 0-1.18.21-1.734.457l-.159.07c-.22.1-.453.205-.678.287A2.719 2.719 0 0 1 9 9.5c-.653 0-1.139-.325-1.495-.562l-.032-.022c-.391-.26-.646-.416-.973-.416-.833 0-1.218.246-2.223.916A.5.5 0 0 1 3.5 9V3a.5.5 0 0 1 .223-.416l.04-.026z"/>
+                              </svg>
+                        </ng-template>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Public Repos: </label>
+                        <span>  {{user?.public_repos}}</span><br>
+                        <label>Followers: </label>
+                        <span>  {{user?.followers}}</span><br>
+                        <label>Following: </label>
+                        <span>  {{user?.following}}</span><br>
+                        <label>Created At: </label>
+                        <span>  {{user?.created_at | date}}</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
         </div>
-        <ng-template #elseBlock>
-            <p style="margin-left: 127px;">Enter User Name</p>
-        </ng-template>
     </div>
 </div>

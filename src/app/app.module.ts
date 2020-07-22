@@ -5,6 +5,7 @@ import { HttpClientModule  } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

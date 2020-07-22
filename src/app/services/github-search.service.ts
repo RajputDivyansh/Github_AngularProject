@@ -8,12 +8,13 @@ import { HttpClient } from '@angular/common/http';
 export class GithubSearchService {
 
   searchAPI:string = "https://api.github.com/search/users?q=";
-  userAPI:string = " https://api.github.com/users/"
+  userAPI:string = "https://api.github.com/users/"
 
   constructor(private http:HttpClient) { }
 
-  getSearchUsers(user:string) {
-     return this.http.get(this.searchAPI.concat(user));
+  getSearchUsers(user:string,page:unknown) {
+    console.log("page = "+page);
+     return this.http.get(this.searchAPI.concat(user).concat("&page=").concat(page as string));
   }
 
   getSearchSortUsers(user:string,order:boolean) {
@@ -27,7 +28,8 @@ export class GithubSearchService {
     return this.http.get(this.searchAPI.concat(user).concat("&sort=score&order=").concat(orderString));
  }
 
-  // getUser(user:string) {
-  //   return this.http.get(this.userAPI.concat(user))
-  // }
+  getUser(user:string) {
+    return this.http.get(this.userAPI.concat(user));
+  }
+
 }
